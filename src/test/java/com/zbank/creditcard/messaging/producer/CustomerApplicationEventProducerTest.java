@@ -1,12 +1,9 @@
 package com.zbank.creditcard.messaging.producer;
 
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
-<<<<<<< Updated upstream
 import com.zbank.creditcard.messaging.event.CustomerApplicationEvent;
-=======
 import com.zbank.creditcard.entity.Applicants;
-import com.zbank.creditcard.messaging.producer.event.CustomerApplicationEvent;
->>>>>>> Stashed changes
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
