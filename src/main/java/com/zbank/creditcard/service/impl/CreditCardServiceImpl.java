@@ -1,6 +1,6 @@
 package com.zbank.creditcard.service.impl;
 
-import com.zbank.creditcard.contsants.ApplicationConstants;
+import com.zbank.creditcard.constants.ApplicationConstants;
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import com.zbank.creditcard.dto.response.ApplicantsResponseDto;
 import com.zbank.creditcard.entity.Applicants;
