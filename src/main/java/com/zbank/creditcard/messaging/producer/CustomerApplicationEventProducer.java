@@ -2,7 +2,7 @@ package com.zbank.creditcard.messaging.producer;
 
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import com.zbank.creditcard.entity.Applicants;
-import com.zbank.creditcard.messaging.producer.event.CustomerApplicationEvent;
+import com.zbank.creditcard.messaging.event.CustomerApplicationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +28,6 @@ public class CustomerApplicationEventProducer {
 
         log.info("Publishing event to topic {}: applicationId={}", topicName, event.applicationId());
 
-        kafkaTemplate.send(topicName, event.applicationId(), event);
+        kafkaTemplate.send(topicName, String.valueOf(event.applicationId()), event);
     }
 }

@@ -1,4 +1,4 @@
-package com.zbank.creditcard.messaging.producer.event;
+package com.zbank.creditcard.messaging.event;
 
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import lombok.Builder;

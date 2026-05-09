@@ -1,7 +1,7 @@
 package com.zbank.creditcard.messaging.producer;
 
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
-import com.zbank.creditcard.messaging.producer.event.CustomerApplicationEvent;
+import com.zbank.creditcard.messaging.event.CustomerApplicationEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
