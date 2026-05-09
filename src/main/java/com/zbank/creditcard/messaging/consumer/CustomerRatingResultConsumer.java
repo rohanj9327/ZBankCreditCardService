@@ -1,6 +1,9 @@
 package com.zbank.creditcard.messaging.consumer;
 
+import com.zbank.creditcard.constants.ApplicationConstants;
 import com.zbank.creditcard.dto.request.RatingResultDto;
+import com.zbank.creditcard.entity.ApplicationStatus;
+import com.zbank.creditcard.repository.ApplicationStatusRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -11,6 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CustomerRatingResultConsumer {
+
+    private final ApplicationStatusRepository applicationStatusRepository;
+
     @KafkaListener(
             id = "zbank-customer-rating-result-consumer",
             topics = "customer-rating-results",
@@ -19,8 +25,12 @@ public class CustomerRatingResultConsumer {
     public void consumeRatingResult(@Payload RatingResultDto ratingResult) {
         log.info("Received rating result for Application ID: {}", ratingResult.applicationId());
 
-        if ("Passed".equalsIgnoreCase(ratingResult.status())) {
-            //todo update status
+        if (ApplicationConstants.PASSED.equalsIgnoreCase(ratingResult.status())) {
+
+            ApplicationStatus status = applicationStatusRepository.findById(Long.valueOf(ratingResult.applicationId()))
+                    .orElseThrow(() -> new RuntimeException("Applicant ID not found"));
+
+            applicationStatusRepository.save(status);
             //TODO send notification succ
         } else {
             //TODO send notification succ
