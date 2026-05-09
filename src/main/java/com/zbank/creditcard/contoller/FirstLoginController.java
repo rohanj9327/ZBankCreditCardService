@@ -3,6 +3,9 @@ package com.zbank.creditcard.contoller;
 import com.zbank.creditcard.dto.request.FirstLoginRequestDto;
 import com.zbank.creditcard.dto.response.FirstLoginResponseDto;
 import com.zbank.creditcard.service.FirstLoginService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/credit-cards")
+@Tag(name = "First Login", description = "Endpoints for initial card activation and PIN setup")
 public class FirstLoginController {
 
     private final FirstLoginService firstLoginService;
@@ -20,6 +24,12 @@ public class FirstLoginController {
         this.firstLoginService = firstLoginService;
     }
 
+    @Operation(
+            summary = "Generate initial Credit Card PIN",
+            description = "Validates user credentials and generates a secure PIN for the first-time login process."
+    )
+    @ApiResponse(responseCode = "200", description = "PIN generated successfully")
+    @ApiResponse(responseCode = "400", description = "Invalid request data")
     @PostMapping("/first-login")
     public ResponseEntity<FirstLoginResponseDto> firstLogin(@Valid @RequestBody FirstLoginRequestDto request) {
         return ResponseEntity.ok(firstLoginService.generatePin(request));
