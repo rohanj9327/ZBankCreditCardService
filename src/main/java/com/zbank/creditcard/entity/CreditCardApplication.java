@@ -1,10 +1,7 @@
 package com.zbank.creditcard.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,6 +20,8 @@ public class CreditCardApplication {
 
     @ManyToOne
     @JoinColumn(name = "applicant_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Applicants applicants;
 
     private Integer creditScore;
