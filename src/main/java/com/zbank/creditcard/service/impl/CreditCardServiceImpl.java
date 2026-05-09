@@ -34,11 +34,13 @@ public class CreditCardServiceImpl implements CreditCardService {
                 .annualSalary(applicantRequestDto.getAnnualSalary())
                 .existingCreditCards(applicantRequestDto.getExistingCreditCards())
                 .dob(applicantRequestDto.getDob())
+                .employmentType(applicantRequestDto.getEmploymentType())
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        //TODO add application Id
+        applicantsRepository.save(applicant);
         customerApplicationEventProducer.publishApplicationEvent(applicantRequestDto);
-        return ApplicantsResponseDto.bu;
+
+        return new ApplicantsResponseDto();
     }
 }

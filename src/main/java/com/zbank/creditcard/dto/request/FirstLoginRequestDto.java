@@ -12,6 +12,7 @@ public class FirstLoginRequestDto {
     @NotBlank
     private String cardNumber;
 
+    @NotBlank
     @Pattern(
             regexp = "^[0-9]{4}$",
             message = "PIN must be 4 digits"
@@ -19,14 +20,13 @@ public class FirstLoginRequestDto {
     private String firstTimePin;
 
     @NotBlank
-    private String documentId;
-
     @Pattern(
             regexp = "^[0-9]{4}$",
             message = "New PIN must be 4 digits"
     )
     private String newPin;
 
+    @NotBlank
     @Pattern(
             regexp = "^[0-9]{4}$",
             message = "Confirm PIN must be 4 digits"
