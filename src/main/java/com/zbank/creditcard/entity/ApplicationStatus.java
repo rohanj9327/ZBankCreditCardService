@@ -14,13 +14,33 @@ import lombok.NoArgsConstructor;
 @Table(name = "credit_card_application_status")
 public class ApplicationStatus {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        private String status;
+    /*
+        PENDING
+        APPROVED
+        REJECTED
+     */
+    private String status;
 
-        @OneToOne
-        @JoinColumn(name = "application_id")
-        private Applicants applicants;
+    /*
+        Credit score from credit-score-service
+     */
+    private Integer creditScore;
+
+    /*
+        GOLD / PLATINUM / SILVER
+     */
+    private String cardType;
+
+    /*
+        Failure reason if rejected
+     */
+    private String failureReason;
+
+    @OneToOne
+    @JoinColumn(name = "application_id")
+    private Applicants applicants;
 }

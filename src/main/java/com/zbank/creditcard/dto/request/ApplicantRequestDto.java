@@ -40,7 +40,7 @@ public class ApplicantRequestDto {
 
     @Min(value = 0)
     @Max(value = 10)
-    private int[] existingCreditCards;
+    private int existingCreditCards;
 
     @NotBlank(message = "Aadhar number is required")
     @Pattern(

@@ -4,6 +4,7 @@ import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import com.zbank.creditcard.dto.response.ApplicantsResponseDto;
 import com.zbank.creditcard.service.CreditCardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,12 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/credit")
+@Slf4j
 public class CreditCardController {
 
     private final CreditCardService creditCardService;
 
     @PostMapping("/apply")
     public ResponseEntity<ApplicantsResponseDto> apply(@RequestBody ApplicantRequestDto applicantRequestDto) {
-        return ResponseEntity.ok(creditCardService.apply(applicantRequestDto));
+        log.info("Received credit card application request for: {} {}", applicantRequestDto.getFirstName(), applicantRequestDto.getLastName());
+        ApplicantsResponseDto response = creditCardService.apply(applicantRequestDto);
+
+        log.info("Successfully processed application request");
+        return ResponseEntity.ok(response);
     }
+
 }
