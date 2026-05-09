@@ -1,6 +1,5 @@
 package com.zbank.creditcard.messaging.event;
 
-import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerApplicationEvent {
-    private Long applicationId;
-    private String eventType;
-    private ApplicantRequestDto applicantData;
+public class NotificationEvent {
+    private String applicationId;
+    private String customerEmail;
+    private String status;
+    private String messageBody;
+    private String failureReason;
 }

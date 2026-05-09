@@ -8,26 +8,38 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomerApplicationEventProducer {
 
-    private final KafkaTemplate<String, CustomerApplicationEvent> kafkaTemplate;
+    // Change the Template type to <String, String>
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final ObjectMapper objectMapper;
 
     @Value("${zbank.kafka.topic.customer-application:customerapplicationevent}")
     private String topicName;
 
     public void publishApplicationEvent(ApplicantRequestDto applicantDto, Applicants updated) {
-        CustomerApplicationEvent event = CustomerApplicationEvent.builder()
-                .applicationId(updated.getId())
-                .eventType("CREDIT_SCORE_EVALUATION_STARTED")
-                .applicantData(applicantDto)
-                .build();
+        try {
+            CustomerApplicationEvent event = CustomerApplicationEvent.builder()
+                    .applicationId(updated.getId())
+                    .eventType("CREDIT_SCORE_EVALUATION_STARTED")
+                    .applicantData(applicantDto)
+                    .build();
 
-        log.info("Publishing event to topic {}: applicationId={}", topicName, event.applicationId());
+            // Manually convert Object to JSON String
+            String jsonMessage = objectMapper.writeValueAsString(event);
 
-        kafkaTemplate.send(topicName, String.valueOf(event.applicationId()), event);
+            log.info("Publishing JSON to topic {}: {}", topicName, jsonMessage);
+
+            // Send as String
+            kafkaTemplate.send(topicName, String.valueOf(event.getApplicationId()), jsonMessage);
+
+        } catch (Exception e) {
+            log.error("Serialization failed: {}", e.getMessage());
+        }
     }
 }
