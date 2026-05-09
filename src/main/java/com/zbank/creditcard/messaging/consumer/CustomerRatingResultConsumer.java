@@ -3,6 +3,8 @@ package com.zbank.creditcard.messaging.consumer;
 import com.zbank.creditcard.constants.ApplicationConstants;
 import com.zbank.creditcard.dto.request.RatingResultDto;
 import com.zbank.creditcard.entity.ApplicationStatus;
+import com.zbank.creditcard.messaging.event.NotificationEvent;
+import com.zbank.creditcard.messaging.producer.NotificationProducer;
 import com.zbank.creditcard.repository.ApplicationStatusRepository;
 import com.zbank.creditcard.service.CreditCardCreationService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,8 @@ public class CustomerRatingResultConsumer {
 
     private final CreditCardCreationService
             creditCardCreationService;
+
+    private final NotificationProducer notificationProducer;
 
     @KafkaListener(
             id = "zbank-customer-rating-result-consumer",
@@ -87,6 +91,10 @@ public class CustomerRatingResultConsumer {
                     "Credit card created for applicationId={}",
                     ratingResult.applicationId()
             );
+
+            notificationProducer.sendNotification(NotificationEvent.builder()
+                    .messageBody("Credit card approved against application id" + status.getId())
+                    .customerEmail("test.rohan@gmail.com").build());
         }
 
         /*
@@ -110,6 +118,10 @@ public class CustomerRatingResultConsumer {
                     "Application rejected for applicationId={}",
                     ratingResult.applicationId()
             );
+
+            notificationProducer.sendNotification(NotificationEvent.builder()
+                    .messageBody("Credit card rejected against application id" + status.getId())
+                    .customerEmail("test.rohan@gmail.com").build());
         }
     }
 }
