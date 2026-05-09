@@ -48,7 +48,7 @@ class CreditCardServiceImplTest {
         dto.setEmail("nandish@gmail.com");
         dto.setMobile("9876543210");
         dto.setAnnualSalary(new BigDecimal("250000") );
-        dto.setExistingCreditCards(new int[] { 1, 2});
+        dto.setExistingCreditCards(2);
         dto.setEmploymentType("SALARIED");
         dto.setDob(LocalDate.of(2000, 5, 10));
 

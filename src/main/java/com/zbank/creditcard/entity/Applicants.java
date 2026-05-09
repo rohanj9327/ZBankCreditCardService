@@ -37,7 +37,7 @@ public class Applicants {
 
     private BigDecimal annualSalary;
 
-    private int[] existingCreditCards;
+    private int existingCreditCards;
 
     private LocalDateTime createdAt;
 
