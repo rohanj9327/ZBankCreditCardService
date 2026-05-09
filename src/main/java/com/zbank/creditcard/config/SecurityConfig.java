@@ -21,6 +21,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/credit-cards/first-login").permitAll()
+                        .requestMatchers("/api/v1/credit/apply").permitAll()
                         .anyRequest().authenticated()
                 );
 

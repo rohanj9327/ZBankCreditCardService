@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/credit")
+@RequestMapping("/api/v1/credit")
 public class CreditCardController {
 
     private final CreditCardService creditCardService;

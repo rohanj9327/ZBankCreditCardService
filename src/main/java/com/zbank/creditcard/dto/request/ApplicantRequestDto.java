@@ -1,9 +1,7 @@
 package com.zbank.creditcard.dto.request;
 
 import jakarta.validation.constraints.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +9,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApplicantRequestDto {
     @NotBlank(message = "First name is required")
     @Size(min = 2, max = 50)
