@@ -1,4 +1,4 @@
-package com.zbank.credit_card_service;
+package com.zbank.creditcard;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
