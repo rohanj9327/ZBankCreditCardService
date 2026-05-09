@@ -41,6 +41,6 @@ public class ApplicantRequestDto {
 
     @Min(value = 0)
     @Max(value = 10)
-    private Integer existingCreditCards;
+    private int[] existingCreditCards;
 
 }
