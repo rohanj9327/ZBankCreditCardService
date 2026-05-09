@@ -1,4 +1,4 @@
-package com.zbank.creditcard.controller;
+package com.zbank.creditcard.contoller;
 
 import com.zbank.creditcard.dto.request.FirstLoginRequestDto;
 import com.zbank.creditcard.dto.response.FirstLoginResponseDto;

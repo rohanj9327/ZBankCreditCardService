@@ -1,4 +1,4 @@
-package com.zbank.creditcard.contsants;
+package com.zbank.creditcard.constants;
 
 public class ApplicationConstants {
     public static final String PENDING = "PENDING";
