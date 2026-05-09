@@ -38,6 +38,8 @@ public class CreditCardServiceImpl implements CreditCardService {
                 .existingCreditCards(applicantRequestDto.getExistingCreditCards())
                 .dob(applicantRequestDto.getDob())
                 .employmentType(applicantRequestDto.getEmploymentType())
+                .aadharNumber(applicantRequestDto.getAadharNumber())
+                .panNumber(applicantRequestDto.getPanNumber())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -51,7 +53,12 @@ public class CreditCardServiceImpl implements CreditCardService {
         creditStatusRepository.save(creditCardApplicationStatus);
 
         customerApplicationEventProducer.publishApplicationEvent(applicantRequestDto, savedApplicant);
-        return null;
+
+        String successMessage = String.format("Credit Card application submitted successfully! Your application ID is: %d",savedApplicant.getId());
+
+        return ApplicantsResponseDto.builder()
+                .message(successMessage)
+                .build();
     }
 
     private void validateEmail(String email) {

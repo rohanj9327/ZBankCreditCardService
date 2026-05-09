@@ -1,11 +1,17 @@
 package com.zbank.creditcard.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ApplicantsResponseDto {
 
-        String customerName;
+      private String message;
 
 }
