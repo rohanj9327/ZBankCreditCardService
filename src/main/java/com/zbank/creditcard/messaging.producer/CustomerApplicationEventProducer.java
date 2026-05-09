@@ -1,6 +1,7 @@
 package com.zbank.creditcard.messaging.producer;
 
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
+import com.zbank.creditcard.entity.Applicants;
 import com.zbank.creditcard.messaging.producer.event.CustomerApplicationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,9 @@ public class CustomerApplicationEventProducer {
     @Value("${zbank.kafka.topic.customer-application:customerapplicationevent}")
     private String topicName;
 
-    public void publishApplicationEvent(ApplicantRequestDto applicantDto) {
+    public void publishApplicationEvent(ApplicantRequestDto applicantDto, Applicants updated) {
         CustomerApplicationEvent event = CustomerApplicationEvent.builder()
-                .applicationId(applicantDto.getEmail())
+                .applicationId(updated.getId())
                 .eventType("CREDIT_SCORE_EVALUATION_STARTED")
                 .applicantData(applicantDto)
                 .build();

@@ -17,7 +17,7 @@ public class CeditCardController {
 
     private final CreditCardService creditCardService;
 
-    @PostMapping
+    @PostMapping("/apply")
     public ResponseEntity<ApplicantsResponseDto> apply(@RequestBody ApplicantRequestDto applicantRequestDto) {
         return ResponseEntity.ok(creditCardService.apply(applicantRequestDto));
     }
