@@ -10,12 +10,14 @@ import com.zbank.creditcard.repository.ApplicantsRepository;
 import com.zbank.creditcard.repository.ApplicationStatusRepository;
 import com.zbank.creditcard.service.CreditCardService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CreditCardServiceImpl implements CreditCardService {
 
     private final ApplicantsRepository applicantsRepository;
@@ -26,7 +28,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     @Override
     public ApplicantsResponseDto apply(ApplicantRequestDto applicantRequestDto) {
-
+        log.info("Processing credit card application for email: {}", applicantRequestDto.getEmail());
         validateEmail(applicantRequestDto.getEmail());
 
         Applicants applicant = Applicants.builder()
@@ -44,6 +46,7 @@ public class CreditCardServiceImpl implements CreditCardService {
                 .build();
 
         Applicants savedApplicant = applicantsRepository.save(applicant);
+        log.info("Applicant saved successfully with ID: {}", savedApplicant.getId());
 
         ApplicationStatus creditCardApplicationStatus = ApplicationStatus.builder()
                 .status(ApplicationConstants.PENDING)
@@ -51,10 +54,12 @@ public class CreditCardServiceImpl implements CreditCardService {
                 .build();
 
         creditStatusRepository.save(creditCardApplicationStatus);
+        log.debug("Initial status set to PENDING for application ID: {}", savedApplicant.getId());
 
         customerApplicationEventProducer.publishApplicationEvent(applicantRequestDto, savedApplicant);
 
         String successMessage = String.format("Credit Card application submitted successfully! Your application ID is: %d",savedApplicant.getId());
+        log.info("Application flow completed for ID: {}", savedApplicant.getId());
 
         return ApplicantsResponseDto.builder()
                 .message(successMessage)
@@ -63,6 +68,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     private void validateEmail(String email) {
         if (applicantsRepository.existsByEmail(email)) {
+            log.warn("Application attempt with existing email: {}", email);
             throw new RuntimeException("Email already exists");
         }
     }
