@@ -1,10 +1,13 @@
 package com.zbank.creditcard.service.impl;
 
+import com.zbank.creditcard.contsants.ApplicationConstants;
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import com.zbank.creditcard.dto.response.ApplicantsResponseDto;
 import com.zbank.creditcard.entity.Applicants;
+import com.zbank.creditcard.entity.ApplicationStatus;
 import com.zbank.creditcard.messaging.producer.CustomerApplicationEventProducer;
 import com.zbank.creditcard.repository.ApplicantsRepository;
+import com.zbank.creditcard.repository.ApplicationStatusRepository;
 import com.zbank.creditcard.service.CreditCardService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,14 +20,14 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     private final ApplicantsRepository applicantsRepository;
 
+    private final ApplicationStatusRepository creditStatusRepository;
+
     private final CustomerApplicationEventProducer customerApplicationEventProducer;
 
     @Override
     public ApplicantsResponseDto apply(ApplicantRequestDto applicantRequestDto) {
 
-        if (applicantsRepository.existsByEmail(applicantRequestDto.getEmail())) {
-            throw new RuntimeException("Email already exists");
-        }
+        validateEmail(applicantRequestDto.getEmail());
 
         Applicants applicant = Applicants.builder()
                 .firstName(applicantRequestDto.getFirstName())
@@ -38,9 +41,30 @@ public class CreditCardServiceImpl implements CreditCardService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
+<<<<<<< Updated upstream
         applicantsRepository.save(applicant);
         customerApplicationEventProducer.publishApplicationEvent(applicantRequestDto);
 
         return new ApplicantsResponseDto();
+=======
+
+        Applicants savedApplicant = applicantsRepository.save(applicant);
+
+        ApplicationStatus creditCardApplicationStatus = ApplicationStatus.builder()
+                .status(ApplicationConstants.PENDING)
+                .applicants(savedApplicant)
+                .build();
+
+        creditStatusRepository.save(creditCardApplicationStatus);
+
+        customerApplicationEventProducer.publishApplicationEvent(applicantRequestDto, savedApplicant);
+        return null;
+    }
+
+    private void validateEmail(String email) {
+        if (applicantsRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already exists");
+        }
+>>>>>>> Stashed changes
     }
 }

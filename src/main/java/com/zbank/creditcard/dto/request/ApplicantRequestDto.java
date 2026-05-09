@@ -43,4 +43,18 @@ public class ApplicantRequestDto {
     @Max(value = 10)
     private int[] existingCreditCards;
 
+    @NotBlank(message = "Aadhar number is required")
+    @Pattern(
+            regexp = "^[2-9]{1}[0-9]{11}$",
+            message = "Aadhar number must be 12 digits and cannot start with 0 or 1"
+    )
+    private String aadharNumber;
+
+    @NotBlank(message = "PAN number is required")
+    @Pattern(
+            regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
+            message = "Invalid PAN format (expected: ABCDE1234F)"
+    )
+    private String panNumber;
+
 }

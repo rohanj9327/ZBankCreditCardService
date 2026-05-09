@@ -4,8 +4,6 @@ import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import lombok.Builder;
 
 @Builder
-public record CustomerApplicationEvent(String applicationId,
-                                       String eventType,
-                                       ApplicantRequestDto applicantData
-) {
+public record CustomerApplicationEvent(Long applicationId, String eventType, ApplicantRequestDto applicantData) {
+
 }

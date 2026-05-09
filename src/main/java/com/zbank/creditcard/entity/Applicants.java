@@ -41,4 +41,8 @@ public class Applicants {
 
     private LocalDateTime createdAt;
 
+    private String aadharNumber;
+
+    private String panNumber;
+
 }
