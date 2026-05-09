@@ -41,13 +41,6 @@ public class CreditCardServiceImpl implements CreditCardService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-<<<<<<< Updated upstream
-        applicantsRepository.save(applicant);
-        customerApplicationEventProducer.publishApplicationEvent(applicantRequestDto);
-
-        return new ApplicantsResponseDto();
-=======
-
         Applicants savedApplicant = applicantsRepository.save(applicant);
 
         ApplicationStatus creditCardApplicationStatus = ApplicationStatus.builder()
@@ -65,6 +58,5 @@ public class CreditCardServiceImpl implements CreditCardService {
         if (applicantsRepository.existsByEmail(email)) {
             throw new RuntimeException("Email already exists");
         }
->>>>>>> Stashed changes
     }
 }
