@@ -25,8 +25,8 @@ public class CustomerApplicationEventProducer {
                 .applicantData(applicantDto)
                 .build();
 
-        log.info("Publishing event to topic {}: CustomerId={}", topicName, event.customerId());
+        log.info("Publishing event to topic {}: applicationId={}", topicName, event.applicationId());
 
-        kafkaTemplate.send(topicName, event.customerId(), event);
+        kafkaTemplate.send(topicName, event.applicationId(), event);
     }
 }
