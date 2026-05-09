@@ -28,6 +28,6 @@ public class CustomerApplicationEventProducer {
 
         log.info("Publishing event to topic {}: applicationId={}", topicName, event.applicationId());
 
-        kafkaTemplate.send(topicName, event.applicationId(), event);
+        kafkaTemplate.send(topicName, String.valueOf(event.applicationId()), event);
     }
 }
