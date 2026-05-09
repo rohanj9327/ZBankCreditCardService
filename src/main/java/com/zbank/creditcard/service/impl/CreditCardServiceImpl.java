@@ -3,6 +3,7 @@ package com.zbank.creditcard.service.impl;
 import com.zbank.creditcard.dto.request.ApplicantRequestDto;
 import com.zbank.creditcard.dto.response.ApplicantsResponseDto;
 import com.zbank.creditcard.entity.Applicants;
+import com.zbank.creditcard.messaging.producer.CustomerApplicationEventProducer;
 import com.zbank.creditcard.repository.ApplicantsRepository;
 import com.zbank.creditcard.service.CreditCardService;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 public class CreditCardServiceImpl implements CreditCardService {
 
     private final ApplicantsRepository applicantsRepository;
+
+    private final CustomerApplicationEventProducer customerApplicationEventProducer;
 
     @Override
     public ApplicantsResponseDto apply(ApplicantRequestDto applicantRequestDto) {
@@ -34,7 +37,8 @@ public class CreditCardServiceImpl implements CreditCardService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-
+        //TODO add application Id
+        customerApplicationEventProducer.publishApplicationEvent(applicantRequestDto);
         return ApplicantsResponseDto.bu;
     }
 }
